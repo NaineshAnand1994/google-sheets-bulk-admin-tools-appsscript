@@ -2,7 +2,7 @@
 
 A professional Google Apps Script add-on for Google Sheets that automates common admin tasks—such as clearing data, formatting headers, duplicating template sheets, and archiving data rows.  
 
-All configuration is controlled via a Settings sheet, making the add-on easy to customize without editing any code.
+It reads configuration from a Settings sheet for repeatable automation, **but also supports interactive prompts when settings are blank**—giving you full flexibility with no code edits needed.
 
 This project demonstrates how to build real-world, business-focused Google Workspace automation with dynamic, user-configurable behavior.
 
@@ -12,20 +12,23 @@ This project demonstrates how to build real-world, business-focused Google Works
 ✅ Custom menu added automatically on open  
 ✅ Clear all data except header  
 ✅ Apply standard header formatting  
-✅ Duplicate a template sheet with a new name  
+✅ Duplicate a template sheet with timestamp in name  
 ✅ Archive current sheet data to an archive sheet  
 ✅ Protect header row to prevent edits  
-✅ All settings are controlled from a Google Sheet
+✅ Hybrid mode:
+- Reads from Settings sheet for automation
+- Prompts user interactively if settings are blank
 
 ---
 
 ## ⚙️ How It Works
 - On open, the script reads settings from a **Settings** tab in your Google Sheet.
-- It dynamically builds a custom menu with these actions.
-- Each menu item performs a useful admin task, using parameters from the Settings sheet.
+- It dynamically builds a custom menu with these admin actions.
+- Each menu item performs a task using parameters from the Settings sheet.
+- **If any parameter is blank in Settings, the script will prompt the user interactively**—so you don't have to edit the sheet every time.
 
 ✅ No need to touch the code to customize!  
-✅ Change parameters in the Settings sheet anytime.
+✅ Change parameters in the Settings sheet or choose at runtime.
 
 ---
 
@@ -41,10 +44,10 @@ Create a tab in your Google Sheet called **Settings** with this structure:
 | ProtectRangeRows      | 1                       |
 
 ✅ **What each setting does:**
-- `MenuName`: The name of the custom menu shown in the sheet.  
-- `TemplateSheetName`: Name of the sheet you want to duplicate when "Duplicate Template" is used.  
-- `ArchiveSheetName`: Name of the sheet to store archived data.  
-- `ProtectRangeRows`: Number of header rows to protect from editing.  
+- `MenuName`: Name of the custom menu shown in the sheet.  
+- `TemplateSheetName`: Sheet to copy when "Duplicate Template" is used. Leave blank to choose interactively.  
+- `ArchiveSheetName`: Sheet to store archived data. Leave blank to choose interactively.  
+- `ProtectRangeRows`: Number of header rows to protect from editing. Leave blank to enter at runtime.
 
 ---
 
@@ -63,15 +66,15 @@ Create a tab in your Google Sheet called **Settings** with this structure:
 
 ## 🧩 Included Menu Actions
 - **Clear Data**  
-  - Clears all data except the header row.  
+  - Wipes all data except header rows.  
 - **Apply Header Formatting**  
-  - Makes header row bold with background color.  
+  - Makes header row(s) bold with background color.  
 - **Duplicate Template**  
-  - Creates a copy of the template sheet with timestamp in name.  
+  - Copies a named template sheet (or prompts for one) with timestamp in name.  
 - **Archive Data**  
-  - Appends all current sheet data to an Archive sheet.  
+  - Appends active sheet data to an archive sheet (or prompts for one).  
 - **Protect Header Row**  
-  - Adds protected range to header rows to prevent edits.
+  - Locks header rows against editing (reads count from Settings or prompts user).
 
 ---
 
@@ -81,10 +84,11 @@ See [Code.gs](Code.gs) for the full Google Apps Script code.
 ---
 
 ## 💡 Ideas for Extensions
-⭐ Add custom email notifications when archiving.  
-⭐ Make formatting fully customizable via Settings.  
+⭐ Add email notifications on archiving.  
+⭐ Customize formatting via Settings.  
 ⭐ Add data validation before archiving.  
-⭐ Support multiple templates or archives.
+⭐ Support multiple templates or archives.  
+⭐ Add InteractiveMode toggle in Settings.
 
 ---
 
